@@ -1,0 +1,23 @@
+# .github/workflows/build-and-test.yml
+name: Build and Test
+on:
+  push: 
+    branches:
+      - main
+  pull_request:
+jobs:
+  build-and-test:
+    name: Build and test
+    runs-on: ubuntu-20.04  #vm not container, it has preinstalled tools? need to tune up the environment, has like 30gb
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3 # comes from the actions repo
+      - name: Install Node.js 14.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+          cache: npm
+      - name: Install dependencies
+        run: npm install #command line scripts
+      - name: Run unit tests
+        run: npm test
